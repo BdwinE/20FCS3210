@@ -34,7 +34,7 @@ class LexicalAnalyzer(private var source: String) extends Iterable[LexemeUnit] {
       CharClass.OTHER
   }
 
-  // reads the input until a non-blank character is found
+  // reads the input until a non-blank character is found, returning the input updated
   private def readBlanks: Unit = {
     var foundNonBlank = false
     while (input.length > 0 && !foundNonBlank) {
@@ -66,42 +66,14 @@ class LexicalAnalyzer(private var source: String) extends Iterable[LexemeUnit] {
             var c = input(0)
             var charClass = getCharClass(c)
 
-            // TODOd: recognize a single letter as an identifier
-            if (charClass == CharClass.LETTER) {
-              lexeme += c
-              input = input.substring(1) // consume the character at (0)
-              return new LexemeUnit(lexeme, Token.IDENTIFIER)
-            }
+            // TODO: recognize a single letter as an identifier
 
-            // TODOd: recognize multiple digits as a literal
-            if (charClass == CharClass.DIGIT) {
-              lexeme += c
-              input = input.substring(1)
-              var noMoreDigits = false
-              while (input.length() > 0 && !noMoreDigits) {
-                c = input(0)
-                charClass = getCharClass(c)
-                if (charClass == CharClass.DIGIT) {
-                  lexeme += c
-                  input = input.substring(1)
-                }
-                else
-                  noMoreDigits = true
-              }
-              return new LexemeUnit(lexeme, Token.LITERAL)
-            }
 
-            // TODOd: recognize operators
-            if (charClass == CharClass.OPERATOR) {
-              lexeme += c
-              input = input.substring(1)
-              c match {
-                case '+' => return new LexemeUnit(lexeme, Token.ADD_OP)
-                case '-' => return new LexemeUnit(lexeme, Token.SUB_OP)
-                case '*' => return new LexemeUnit(lexeme, Token.MUL_OP)
-                case '/' => return new LexemeUnit(lexeme, Token.DIV_OP)
-              }
-            }
+            // TODO: recognize multiple digits as a literal
+
+
+            // TODO: recognize operators
+
 
             // throw an exception if an unrecognizable symbol is found
             throw new Exception("Lexical Analyzer Error: unrecognizable symbol found!")
