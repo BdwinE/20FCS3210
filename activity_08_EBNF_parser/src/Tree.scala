@@ -6,11 +6,13 @@
 
 import scala.collection.mutable.ArrayBuffer
 
-class Tree(var label: String) {
+class Tree(var label: String) extends Serializable {
 
   private val branches: ArrayBuffer[Tree] = new ArrayBuffer[Tree]
 
   def add(branch: Tree): Unit = branches.addOne(branch)
+
+  def getBranches = branches
 
   private def print(current: Tree, tabs: String): String = {
     var out = ""
