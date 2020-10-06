@@ -1,5 +1,4 @@
-import scala.collection.mutable.ArrayBuffer
-import scala.math
+
 
 /*
  * CS3210 - Principles of Programming Languages - Fall 2020
@@ -10,16 +9,44 @@ import scala.math
 object FP {
 
   // TODO #1: write function *isPrime* that takes an integer and returns true/false whether the input is a prime number or not.
+  def isPrimeV1(n: Int): Boolean = {
+    for (d <- 2 to n - 1)
+      if (n % d == 0)
+        return false
+    true
+  }
 
+  def isPrimeV2(n: Int): Boolean = {
+    if (n <= 1)
+      false
+    else
+      (2 to n - 1).map(n % _ != 0).reduceLeft(_ && _)
+  }
 
   // TODO #2: version 2 of isPrime
-
+  def isPrimeV3(n: Int): Boolean = {
+    if (n <= 1)
+      false
+    else
+      (2 to math.sqrt(n).toInt).map(n % _ != 0).reduceLeft(_ && _)
+  }
 
   // TODO #3: write function *gcd* that takes two integers and returns the GCD (Greatest Common Divisor) of the two inputs.
-
+  // hint: use the Euclidean algorithm!
+  def gcd(a: Int, b: Int): Int = {
+    if (a % b == 0)
+      b
+    else
+      gcd(b, a % b)
+  }
 
   // TODO #4: rewrite *gcd* as *gcdC* using currying notation.
-
+  def gcdC(a: Int) = (b: Int) => {
+    if (a % b == 0)
+      b
+    else
+      gcd(b, a % b)
+  }
 
   // TODO #5: write function *coprime* that takes two integers and returns true/false whether the numbers are coprimes (their GCD equals to 1).
 
@@ -43,6 +70,7 @@ object FP {
   // TODO #12: write the function *golbachList* that takes a range of integers and returns a list of all even numbers and their Goldbach composition.
 
   def main(args: Array[String]): Unit = {
+    println(gcdC(18)(12))
   }
 
 }
